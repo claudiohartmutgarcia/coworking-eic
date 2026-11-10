@@ -1,12 +1,14 @@
 // Lokale Vorschau der statischen Seite: http://localhost:8080
 //
-//   node tools/vorschau.mjs [port]
+//   node tools/vorschau.mjs [port] [ordner]
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "site");
+const SITE = process.argv[3]
+  ? path.resolve(process.argv[3])
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "site");
 const PORT = Number(process.argv[2] || 8080);
 const TYPES = {
   ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",

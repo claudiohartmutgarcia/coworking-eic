@@ -21,7 +21,7 @@ Danach http://localhost:8080 im Browser öffnen.
 
 ## Vorschau auf GitHub Pages
 
-Jeder Push auf `main` veröffentlicht `site/` über den Workflow `.github/workflows/pages.yml` auf GitHub Pages. Dabei setzt `tools/suchmaschinen-sperren.mjs` in jede veröffentlichte Seite `noindex`, aber nur in der Kopie, die hochgeladen wird. So erscheint die Vorschau nicht neben der alten WordPress-Seite bei Google. Die Dateien in `site/` bleiben unverändert. Für den echten Umzug auf coworking-eic.de lädt man `site/` direkt hoch, ohne dieses Skript.
+Jeder Push auf `main` veröffentlicht `site/` über den Workflow `.github/workflows/pages.yml` auf GitHub Pages. Dabei setzt `tools/suchmaschinen-sperren.mjs` in jede veröffentlichte Seite `noindex`, aber nur in der Kopie, die hochgeladen wird. So erscheint die Vorschau nicht neben der alten WordPress-Seite bei Google. Weil die Vorschau unter https://claudiohartmutgarcia.github.io/coworking-eic/ liegt, also in einem Unterordner, schreibt `tools/basis-pfad.mjs` dort außerdem alle Pfade um (`/kontakt` → `/coworking-eic/kontakt`). Die Dateien in `site/` bleiben unverändert. Für den echten Umzug auf coworking-eic.de lädt man `site/` direkt hoch, ohne dieses Skript.
 
 ## Termine pflegen
 
