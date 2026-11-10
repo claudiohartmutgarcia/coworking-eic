@@ -1,0 +1,67 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Coworking Eichsfeld e.V.//Termine//DE
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:thex-sprechtag-794-2026-03-04@coworking-eic.de
+DTSTAMP:20261110T061709Z
+DTSTART;TZID=Europe/Berlin:20260304T090000
+DTEND;TZID=Europe/Berlin:20260304T130000
+SUMMARY:Sprechtag des ThEx
+LOCATION:Coworking Eichsfeld\, Windische Gasse 11A\, 37308 Heilbad Heiligenstadt
+URL:https://www.coworking-eic.de/events/thex-sprechtag-794
+END:VEVENT
+BEGIN:VEVENT
+UID:thex-sprechtag-794-2026-05-06@coworking-eic.de
+DTSTAMP:20261110T061709Z
+DTSTART;TZID=Europe/Berlin:20260506T090000
+DTEND;TZID=Europe/Berlin:20260506T130000
+SUMMARY:Sprechtag des ThEx
+LOCATION:Coworking Eichsfeld\, Windische Gasse 11A\, 37308 Heilbad Heiligenstadt
+URL:https://www.coworking-eic.de/events/thex-sprechtag-794
+END:VEVENT
+BEGIN:VEVENT
+UID:thex-sprechtag-794-2026-07-01@coworking-eic.de
+DTSTAMP:20261110T061709Z
+DTSTART;TZID=Europe/Berlin:20260701T090000
+DTEND;TZID=Europe/Berlin:20260701T130000
+SUMMARY:Sprechtag des ThEx
+LOCATION:Coworking Eichsfeld\, Windische Gasse 11A\, 37308 Heilbad Heiligenstadt
+URL:https://www.coworking-eic.de/events/thex-sprechtag-794
+END:VEVENT
+BEGIN:VEVENT
+UID:thex-sprechtag-794-2026-09-02@coworking-eic.de
+DTSTAMP:20261110T061709Z
+DTSTART;TZID=Europe/Berlin:20260902T090000
+DTEND;TZID=Europe/Berlin:20260902T130000
+SUMMARY:Sprechtag des ThEx
+LOCATION:Coworking Eichsfeld\, Windische Gasse 11A\, 37308 Heilbad Heiligenstadt
+URL:https://www.coworking-eic.de/events/thex-sprechtag-794
+END:VEVENT
+BEGIN:VEVENT
+UID:thex-sprechtag-794-2026-11-04@coworking-eic.de
+DTSTAMP:20261110T061709Z
+DTSTART;TZID=Europe/Berlin:20261104T090000
+DTEND;TZID=Europe/Berlin:20261104T130000
+SUMMARY:Sprechtag des ThEx
+LOCATION:Coworking Eichsfeld\, Windische Gasse 11A\, 37308 Heilbad Heiligenstadt
+URL:https://www.coworking-eic.de/events/thex-sprechtag-794
+END:VEVENT
+END:VCALENDAR

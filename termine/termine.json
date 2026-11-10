@@ -1,0 +1,52 @@
+{
+  "hinweis": "Termine hier pflegen, dann 'node tools/termine.mjs' ausführen. Datum JJJJ-MM-TT, Uhrzeit HH:MM. Bilder liegen unter site/wp-content/uploads/…, Texte in termine/beschreibungen/.",
+  "veranstaltungen": [
+    {
+      "slug": "after-work",
+      "titel": "After Work im Coworking",
+      "bild": "/wp-content/uploads/2026/01/AfterWork_2026.png",
+      "ort": "Coworking Eichsfeld",
+      "adresse": "Windische Gasse 11A, 37308 Heilbad Heiligenstadt",
+      "beschreibung": "beschreibungen/after-work.html",
+      "termine": [
+        { "datum": "2026-11-24", "von": "18:00", "bis": "22:00" },
+        { "datum": "2026-12-29", "von": "18:00", "bis": "22:00" },
+        { "datum": "2027-01-26", "von": "18:00", "bis": "22:00" },
+        { "datum": "2027-02-23", "von": "18:00", "bis": "22:00" },
+        { "datum": "2027-03-30", "von": "18:00", "bis": "22:00" },
+        { "datum": "2027-04-27", "von": "18:00", "bis": "22:00" },
+        { "datum": "2027-05-25", "von": "18:00", "bis": "22:00" },
+        { "datum": "2027-06-29", "von": "18:00", "bis": "22:00" }
+      ]
+    },
+    {
+      "slug": "thex-sprechtag-794",
+      "titel": "Sprechtag des ThEx",
+      "bild": "/wp-content/uploads/2022/10/Sprechtag-Thex2.png",
+      "ort": "Coworking Eichsfeld",
+      "adresse": "Windische Gasse 11A, 37308 Heilbad Heiligenstadt",
+      "beschreibung": "beschreibungen/thex-sprechtag.html",
+      "termine": [
+        { "datum": "2026-03-04", "von": "9:00", "bis": "13:00" },
+        { "datum": "2026-05-06", "von": "9:00", "bis": "13:00" },
+        { "datum": "2026-07-01", "von": "9:00", "bis": "13:00" },
+        { "datum": "2026-09-02", "von": "9:00", "bis": "13:00" },
+        { "datum": "2026-11-04", "von": "9:00", "bis": "13:00" }
+      ]
+    },
+    {
+      "slug": "digi-kidz-programmieren-tuefteln-und-entdecken",
+      "titel": "DigiKidz Spezial: Programmieren, tüfteln und entdecken",
+      "bild": "/wp-content/uploads/2026/10/DIGIKIDZ_NOV_2026.png",
+      "ort": "Coworking Eichsfeld",
+      "beschreibung": "beschreibungen/digikidz-programmieren.html",
+      "termine": [
+        { "datum": "2026-11-07", "von": "9:00", "bis": "15:00" }
+      ]
+    }
+  ],
+  "weiterleitungen": {
+    "/events/after-work-954": "/events/after-work",
+    "/events": "/veranstaltungen-coworking-eichsfeld"
+  }
+}

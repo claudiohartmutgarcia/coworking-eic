@@ -1,0 +1,12 @@
+{
+  "name": "coworking-eic-de",
+  "private": true,
+  "type": "module",
+  "description": "Statische Website von Coworking Eichsfeld e.V. (coworking-eic.de)",
+  "scripts": {
+    "termine": "node tools/termine.mjs",
+    "aufraeumen": "node tools/aufraeumen.mjs",
+    "links": "node tools/links-pruefen.mjs",
+    "vorschau": "node tools/vorschau.mjs"
+  }
+}

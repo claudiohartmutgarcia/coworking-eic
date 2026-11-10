@@ -1,0 +1,329 @@
+/*
+Theme Name: My Travel Blogs
+Template: bizberg
+Text Domain: my-travel-blogs
+Author: BizbergThemes
+Author URI: https://bizbergthemes.com/
+Theme URI: https://bizbergthemes.com/downloads/my-travel-blogs-lite/
+License: GNU General Public License v3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Description: My Travel Blogs is child theme of Bizberg WordPress Theme. Welcome to My Travel Blogs, your new travel companion and a theme perfect for every travel blogger out there. Create a travel blog and do it in a jiffy! My Travel Blogs is a good name when it comes to the themes related to the travel business or any kind of international agency related to travel.It is also good and highly applicable for the tour planners as well as the tourist guides and a nice option for the travel and adventure blogs as well as the travel magazines. My Travel Blog is a fine theme for the hotels as well as airline agencies and the credit goes to its multiple features of relevance and these include retina ready, user friendliness, CTA, Bootstrap, customization options and above all this theme has the optimised codes a well as the faster page load time. My Travel Blogs is good for tourist agencies, tour operators, travel guides, photographic agencies, travel diaries, vacation, airlines, hotels, lifestyle, technology, traveling or journey blog, fashion, and a lot more.
+Tags: custom-logo,custom-menu,featured-images,threaded-comments,translation-ready,left-sidebar,right-sidebar,grid-layout,theme-options,blog,news,portfolio
+Version: 1.5
+Requires at least: 4.9
+Requires PHP: 5.6
+Tested up to: 5.8
+*/
+
+.navbar-nav li ul li a{
+  font-size: 13px;
+}
+
+.navbar-default .navbar-nav > li > a{
+    letter-spacing: 0;
+}
+
+div#respond h3#reply-title{
+    text-transform: capitalize;
+}
+
+.single_page.detail-content h3.blog-title{
+    text-transform: capitalize;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+.footer_social_links{
+  display: block;
+}
+
+.my_travel_blog_about_me_wrapper a.about_me_btn:hover,
+.my_travel_blog_call_to_action a.call_btn:hover {
+    color: #fff;
+}
+
+/*heading title*/
+.section-title {
+  position: relative;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  z-index: 1;
+}
+
+.section-title h2 {
+  position: relative;
+  font-size: 36px;
+}
+
+.section-title h2 span {
+  color: #e29405;
+}
+
+.section-title h5 {
+  text-transform: capitalize;
+  font-weight: 400;
+}
+
+@media (max-width:767px) {
+  .section-title {
+    width: 100%;
+    text-align: center !important;
+  }
+
+}
+
+/* ========================================= */
+/*         About Us CSS        */
+/* ======================================== */    
+
+.about-us {
+  padding: 80px 0;
+}
+
+.about-us .row.d-flex.align-items-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.about-us .about-inner .about-image-box {
+  overflow: hidden;
+  text-align: center;
+}
+
+.about-us .about-inner .about-image-box img {
+  height: 340px;
+  width: 340px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 15px #cccccc9e;
+  border: 5px solid #fff;
+  margin: 15px 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ========================================= */
+/*         call-to-action CSS        */
+/* ======================================== */
+.call-to-action {
+  padding: 80px 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.call-to-action .call-content {
+  position: relative;
+  z-index: 1;
+}
+
+.call-to-action .call-content h2 span {
+  color: #e29405;
+}
+
+.call-to-action .call-content h3 {
+  color: #fff;
+}
+
+/* ========================================= */
+/*          News section CSS        */
+/* ======================================= */
+.news {
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.news .news-outer {
+  position: relative;
+  z-index: 1;
+}
+
+.news .news-item {
+  border-radius: 0;
+}
+
+.news .news-item .news-image {
+  position: relative;
+  transition: all ease-in-out 0.5s;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.news .news-item .news-image::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-transition: -webkit-transform 1.8s;
+  transition: -webkit-transform 1.8s;
+  transition: all ease-out 0.6s;
+  -webkit-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -200%, 0);
+  transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -200%, 0);
+  z-index: 1;
+}
+
+.news .news-item .news-image:hover:before {
+  -webkit-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 200%, 0);
+  transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 200%, 0);
+}
+
+.news .news-item .news-image .news-cats a {
+  background: #fff;
+  padding: 8px 30px;
+  border-radius: 100px;
+  transition: all ease-in-out 0.5s;
+}
+
+.news .news-item .news-image .news-cats a:hover {
+  background: #e29405;
+  color: #fff;
+  transition: all ease-in-out 0.5s;
+}
+
+.news .news-item .news-image img {
+  transition: all ease-in-out 0.5s;
+  width: 100%;
+  object-fit: cover;
+  height: 300px;
+  object-position: center;
+}
+
+.news .news-item .news-image:hover img {
+  transition: all ease-in-out 0.5s;
+  transform: scale(1.2);
+}
+
+.news .news-item .news-image .news-date {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1;
+  background: #fff;
+  padding: 8px 16px 7px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.news .news-item .news-content {
+  position: absolute;
+  z-index: 1;
+  bottom: 5%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.news .news-item .news-content1 {
+  position: relative;
+  left: inherit;
+  bottom: inherit;
+}
+
+.news .news-item .news-content .news-list, .news .news-item .news-content1 .news-list {
+  padding: 15px 0 5px;
+}
+
+.news .news-item .news-content .news-list li, .news .news-item .news-content1 .news-list li {
+  display: inline-block;
+}
+
+.news .news-item .news-content .news-list li a, .news .news-item .news-content1 .news-list li a {
+  display: inline-block;
+  padding-right: 15px;
+}
+
+.news .news-item .news-content1 .news-list li a {
+  color: #fff;
+}
+
+.my_travel_blog_about_me_wrapper a, .my_travel_blog_call_to_action a.call_btn {
+  padding: 0 30px;
+  border-radius: 999px;
+  line-height: 42px;
+  text-transform: uppercase;
+  text-align: center;    /*background-image: linear-gradient(to right, #801235, #f1868a);*/
+  font-size: 13px;
+  color: #fff;
+  display: inline-block;
+  transition: 0.4s;
+}
+
+.my_travel_blog_about_me_wrapper a:hover {
+  color: #fff;
+}
+
+.my_travel_blog_about_me_wrapper a:hover {
+  -webkit-transform: translateY(2px);
+  -ms-transform: translateY(2px);
+  transform: translateY(2px);
+}
+
+.explore_destination {
+  background-color: #fafafa;
+}
+
+.where_am_i.news .news-item .news-content {
+  bottom: 7%;
+  left: 7%;
+  transform: none;
+  right: 7%;
+}
+
+.destination_cat {
+  margin-bottom: 30px;
+}
+
+.recent_trips_col {
+  margin-bottom: 30px;
+}
+
+@media (max-width:1024px) and (min-width:481px) {
+  .about-us .about-inner .about-image-box img {
+    height: 260px;
+    width: 260px;
+  }
+
+}
+
+@media (max-width:480px) and (min-width:320px) {
+  .about-us .row.d-flex.align-items-center {
+    display: block;
+  }
+
+  .about-us .about-inner .about-image-box img {
+    height: 260px;
+    width: 260px;
+  }
+
+  .my_travel_blog_about_me_wrapper {
+    text-align: center;
+  }
+
+  .about-us .about-inner .about-image-box img {
+    margin-bottom: 30px;
+  }
+
+}
+
+.my_travel_blog_about_me_wrapper a:hover,
+.my_travel_blog_about_me_wrapper a:focus,
+.recent_trips_col a:hover,
+.recent_trips_col a:focus,
+.my_travel_blog_call_to_action a:hover,
+.my_travel_blog_call_to_action a:focus{
+    color: #fff !important;
+}
