@@ -1,0 +1,58 @@
+---
+// Abschluss-Block mit Handlungsaufforderung.
+import { verein, mailto } from "../data/site";
+import { url } from "../lib/url";
+
+interface Props {
+  titel?: string;
+  text?: string;
+}
+const {
+  titel = "Neugierig? Komm vorbei!",
+  text = "Da wir unsere Standorte ehrenamtlich betreiben, schreib uns vorher bitte kurz eine Nachricht – oder buch deinen Platz direkt online.",
+} = Astro.props;
+---
+
+<section class="abschnitt">
+  <div class="container">
+    <div class="aufruf">
+      <div>
+        <h2>{titel}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="knoepfe">
+        <a class="knopf knopf--akzent" href={verein.buchung} target="_blank" rel="noopener">Arbeitsplatz buchen</a>
+        <a class="knopf knopf--hell" href={mailto("Anfrage über coworking-eic.de")}>E-Mail schreiben</a>
+        <a class="knopf knopf--hell" href={url("/kontakt")}>Kontakt & Anfahrt</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aufruf {
+    background: var(--gruen);
+    background-image: radial-gradient(circle at 100% 0%, rgb(240 168 48 / 0.25), transparent 45%);
+    color: rgb(255 255 255 / 0.88);
+    border-radius: calc(var(--radius) + 8px);
+    padding: clamp(32px, 6vw, 64px);
+    display: grid;
+    gap: 28px;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .aufruf {
+      grid-template-columns: 1.2fr 1fr;
+    }
+    .knoepfe {
+      justify-content: flex-end;
+    }
+  }
+  h2 {
+    color: #fff;
+  }
+  p {
+    margin: 0;
+    max-width: 52ch;
+  }
+</style>

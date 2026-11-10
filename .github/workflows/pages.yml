@@ -7,6 +7,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Täglich neu bauen, damit vergangene Termine in Version 2 automatisch verschwinden.
+  schedule:
+    - cron: "0 3 * * *"
 
 permissions:
   contents: read
@@ -27,7 +30,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
+          cache: npm
+          cache-dependency-path: v2/package-lock.json
       - id: pages
         uses: actions/configure-pages@v5
       - name: Für Suchmaschinen sperren
@@ -36,6 +41,17 @@ jobs:
       # Bei einem Repo "<konto>.github.io" ist base_path leer und es passiert nichts.
       - name: Pfade auf Unterordner umschreiben
         run: node tools/basis-pfad.mjs site "${{ steps.pages.outputs.base_path }}"
+      # Version 2 (Astro) liegt in der Vorschau unter .../v2/
+      - name: Version 2 bauen
+        working-directory: v2
+        env:
+          SITE: ${{ steps.pages.outputs.origin }}
+          BASE: ${{ steps.pages.outputs.base_path }}/v2
+          NOINDEX: "1"
+        run: |
+          npm ci
+          npm run build
+          cp -r dist ../site/v2
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

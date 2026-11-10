@@ -1,0 +1,16 @@
+{
+  "name": "coworking-eic-v2",
+  "private": true,
+  "type": "module",
+  "description": "Neue Website von Coworking Eichsfeld e.V., gebaut mit Astro",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "astro": "^7.4.8",
+    "sharp": "^0.35.5"
+  }
+}

@@ -1,0 +1,248 @@
+---
+import { Image } from "astro:assets";
+import Seite from "../layouts/Seite.astro";
+import Seitenkopf from "../components/Seitenkopf.astro";
+import Aufruf from "../components/Aufruf.astro";
+import { verein } from "../data/site";
+import { url } from "../lib/url";
+import logo from "../assets/logo.png";
+import bild from "../assets/bilder/space-heiligenstadt.jpg";
+
+const werte = [
+  { titel: "Mentalität", text: "Wir haben Spaß und sehen der Zukunft positiv gegenüber. Wir sehen die Chancen im Wandel und wollen diese nutzen." },
+  { titel: "Nachhaltigkeit", text: "Wir möchten nachhaltig wirtschaften und bekennen uns zur Verantwortung für uns, andere und die Umwelt." },
+  { titel: "Regionalität", text: "Wir möchten die regionale Wirtschaft stärken und uns in die Gesellschaft einbringen." },
+  { titel: "Toleranz und Offenheit", text: "Wir stehen Menschen und Ideen aufgeschlossen gegenüber und leben eine ehrliche und konstruktive Feedbackkultur." },
+  { titel: "Nicht profitorientiert", text: "Wir möchten die Region cooler machen, das hat für uns keinen Preis." },
+];
+
+const tun = [
+  "Wir geben Menschen einen professionellen Arbeitsplatz und einen Ort zur Weiterentwicklung.",
+  "Wir wollen Coworking im Eichsfeld etablieren.",
+  "Wir möchten die Region voranbringen, indem wir Unternehmen vernetzen, Gründungen unterstützen und potentielle Rückkehrer motivieren, den letzten Schritt zu gehen.",
+];
+
+const dokumente = [
+  { titel: "Satzung", datei: "/dokumente/satzung.pdf", info: "Stand April 2021" },
+  { titel: "Mitglieds- und Beitragsordnung", datei: "/dokumente/mitglieds-und-beitragsordnung.pdf", info: "Stand Juni 2021" },
+  { titel: "Mitgliedsantrag", datei: "/dokumente/mitgliedsantrag.pdf", info: "zum Ausfüllen" },
+];
+
+const antragMail =
+  `mailto:${verein.email}?subject=${encodeURIComponent("Mitgliedsantrag Coworking Eichsfeld e.V.")}` +
+  `&body=${encodeURIComponent("Hallo Coworking Eichsfeld,\n\nanbei mein ausgefüllter Mitgliedsantrag.\n\n")}`;
+---
+
+<Seite titel="Der Verein" beschreibung="Coworking Eichsfeld e.V. – gegründet 2021, gemeinnützig engagiert für neues Arbeiten in Nordthüringen.">
+  <Seitenkopf
+    kicker="Über uns"
+    titel="Coworking Eichsfeld e.V."
+    text="Gegründet im Mai 2021 von Menschen, die sich nach einem inspirierenden und flexiblen Arbeitsort gesehnt haben und den Status quo in unserer Region verändern möchten. Ziel ist eine Kultur des Miteinanders, durch die die Potentiale der Region erschlossen und gestärkt werden."
+    bild={bild}
+    bildAlt="Der Coworking Space in Heiligenstadt"
+  />
+
+  <section class="abschnitt abschnitt--weiss">
+    <div class="container zwei-spalten">
+      <div>
+        <span class="kicker">Vision</span>
+        <h2>Welche Vision hat Coworking Eichsfeld?</h2>
+        <p class="lead">
+          Unsere Vision ist es, eine Anlaufstelle für die Themen Digitalisierung, Neues Arbeiten und Innovation zu schaffen. An diesem Ort des Austausches und des Miteinanders sollen Menschen zusammenkommen und in einer inspirierenden Umgebung arbeiten können.
+        </p>
+        <p>
+          Wir sehen deshalb eine Zukunft, in der die Menschen weniger pendeln müssen, sich mehr in der Region vernetzen und an diesem Ort die ideale Arbeitsumgebung finden. Eine Zukunft, in der zudem die Arbeit kein Hindernis für die Gründung einer Familie darstellt. Und eine Zukunft, in der zwischen Unternehmen und Start-ups Synergien entstehen.
+        </p>
+      </div>
+      <div class="leitsatz">
+        <Image src={logo} alt="" width={140} height={140} />
+        <p class="klein">Unser Leitslogan</p>
+        <p class="gross">{verein.slogan}.</p>
+        <p class="klein">Unser Leitprinzip</p>
+        <p class="gross akzent">{verein.leitprinzip}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt">
+    <div class="container">
+      <div class="kopf">
+        <span class="kicker">Werte</span>
+        <h2>Dafür stehen wir</h2>
+      </div>
+      <div class="raster">
+        {werte.map((w, i) => (
+          <div class="wert">
+            <span class="nr">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{w.titel}</h3>
+            <p>{w.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--gruen">
+    <div class="container zwei-spalten">
+      <div>
+        <span class="kicker">Was wir tun</span>
+        <h2>Coworking im Eichsfeld etablieren</h2>
+        <a class="knopf knopf--akzent" href={url("/preise")}>Preise ansehen</a>
+      </div>
+      <ol class="tun">
+        {tun.map((t) => <li>{t}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--weiss" id="mitgliedschaft">
+    <div class="container zwei-spalten oben">
+      <div>
+        <span class="kicker">Mitgliedschaft</span>
+        <h2>Werde jetzt Mitglied</h2>
+        <p class="lead">Für 5 € im Monat (60 € im Jahr) unterstützt du den Verein und wirst Teil der Community. Wir freuen uns auf dich!</p>
+        <ol class="schritte">
+          <li>Mitgliedsantrag herunterladen und ausfüllen.</li>
+          <li>Per E-Mail an <a href={`mailto:${verein.email}`}>{verein.email}</a> schicken – ein Klick auf den Knopf öffnet dein Mailprogramm, das PDF hängst du einfach an.</li>
+        </ol>
+        <div class="knoepfe">
+          <a class="knopf" href={antragMail}>Mitgliedsantrag per E-Mail senden</a>
+        </div>
+      </div>
+      <ul class="dokumente">
+        {dokumente.map((d) => (
+          <li>
+            <a href={url(d.datei)} target="_blank">
+              <span class="pdf" aria-hidden="true">PDF</span>
+              <span><strong>{d.titel}</strong><small>{d.info}</small></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Aufruf />
+</Seite>
+
+<style>
+  .leitsatz {
+    text-align: center;
+    background: var(--hintergrund);
+    border-radius: var(--radius);
+    padding: 40px 28px;
+  }
+  .leitsatz img {
+    margin: 0 auto 20px;
+  }
+  .klein {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-leise);
+    margin-bottom: 4px;
+  }
+  .gross {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gruen-dunkel);
+  }
+  .akzent {
+    color: #b8760c;
+    margin-bottom: 0;
+  }
+  .wert {
+    background: var(--flaeche);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid var(--linie);
+  }
+  .nr {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--akzent);
+    margin-bottom: 10px;
+  }
+  .wert p {
+    margin: 0;
+    color: var(--text-leise);
+  }
+  .tun {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: n;
+    display: grid;
+    gap: 16px;
+  }
+  .tun li {
+    counter-increment: n;
+    position: relative;
+    padding: 20px 20px 20px 72px;
+    background: rgb(255 255 255 / 0.08);
+    border-radius: var(--radius-klein);
+  }
+  .tun li::before {
+    content: counter(n);
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--akzent);
+    color: var(--gruen-dunkel);
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+  }
+  .oben {
+    align-items: start;
+  }
+  .schritte {
+    padding-left: 1.2em;
+    margin-bottom: 24px;
+  }
+  .schritte li {
+    margin-bottom: 8px;
+  }
+  .dokumente {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .dokumente a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border: 1px solid var(--linie);
+    border-radius: var(--radius-klein);
+    text-decoration: none;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.15s;
+  }
+  .dokumente a:hover {
+    border-color: var(--gruen);
+  }
+  .pdf {
+    flex-shrink: 0;
+    width: 48px;
+    height: 56px;
+    border-radius: 6px;
+    background: var(--gruen-hell);
+    color: var(--gruen);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  .dokumente small {
+    display: block;
+    color: var(--text-leise);
+  }
+</style>

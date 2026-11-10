@@ -1,0 +1,53 @@
+---
+// Einheitlicher Kopfbereich für Unterseiten, optional mit Bild.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  kicker?: string;
+  titel: string;
+  text?: string;
+  bild?: ImageMetadata;
+  bildAlt?: string;
+}
+const { kicker, titel, text, bild, bildAlt = "" } = Astro.props;
+---
+
+<section class:list={["seitenkopf", { "mit-bild": bild }]}>
+  <div class="container raster-kopf">
+    <div class="text">
+      {kicker && <span class="kicker">{kicker}</span>}
+      <h1>{titel}</h1>
+      {text && <p class="lead">{text}</p>}
+      <slot />
+    </div>
+    {bild && (
+      <div class="bild bild-rund">
+        <Image src={bild} alt={bildAlt} widths={[480, 800, 1200]} sizes="(min-width: 880px) 560px, 100vw" loading="eager" />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .seitenkopf {
+    padding-block: clamp(40px, 7vw, 88px) clamp(40px, 6vw, 72px);
+    background:
+      radial-gradient(circle at 90% 0%, var(--gruen-hell), transparent 55%),
+      var(--hintergrund);
+  }
+  .raster-kopf {
+    display: grid;
+    gap: clamp(28px, 5vw, 56px);
+    align-items: center;
+  }
+  @media (min-width: 880px) {
+    .mit-bild .raster-kopf {
+      grid-template-columns: 1.05fr 1fr;
+    }
+  }
+  .bild {
+    aspect-ratio: 4 / 3;
+    box-shadow: var(--schatten);
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import "../styles/global.css";
+import Kopf from "../components/Kopf.astro";
+import Fuss from "../components/Fuss.astro";
+import { url } from "../lib/url";
+
+interface Props {
+  titel: string;
+  beschreibung?: string;
+}
+const { titel, beschreibung = "Coworking Eichsfeld e.V. – Coworking Spaces in Heiligenstadt und Leinefelde. vernetzen, inspirieren, gemeinsam arbeiten." } = Astro.props;
+const voll = titel === "Startseite" ? "Coworking Eichsfeld – vernetzen, inspirieren, gemeinsam arbeiten" : `${titel} | Coworking Eichsfeld`;
+// In der Vorschau (GitHub Pages) setzt der Workflow NOINDEX=1, damit sie nicht bei Google landet.
+const noindex = process.env.NOINDEX === "1";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{voll}</title>
+    <meta name="description" content={beschreibung} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" sizes="32x32" href={url("/favicon-32.png")} />
+    <link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
+    <meta name="theme-color" content="#0c4d48" />
+    <meta property="og:title" content={voll} />
+    <meta property="og:description" content={beschreibung} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+  </head>
+  <body>
+    <a class="sr-only sprung" href="#inhalt">Zum Inhalt springen</a>
+    <Kopf />
+    <main id="inhalt">
+      <slot />
+    </main>
+    <Fuss />
+  </body>
+</html>
+
+<style>
+  .sprung:focus {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: auto;
+    height: auto;
+    clip: auto;
+    z-index: 100;
+    background: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+  }
+</style>

@@ -1,0 +1,8 @@
+---
+import StandortSeite from "../components/StandortSeite.astro";
+import { standorte } from "../data/standorte";
+
+const s = standorte.find((x) => x.slug === "heiligenstadt")!;
+---
+
+<StandortSeite s={s} />

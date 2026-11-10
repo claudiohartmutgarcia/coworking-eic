@@ -1,0 +1,56 @@
+---
+import Seite from "../../layouts/Seite.astro";
+import Seitenkopf from "../../components/Seitenkopf.astro";
+import TerminKarte from "../../components/TerminKarte.astro";
+import Aufruf from "../../components/Aufruf.astro";
+import { kommendeTermine, datum } from "../../lib/termine";
+import { mailto } from "../../data/site";
+
+const termine = await kommendeTermine();
+// Nach Monat gruppieren
+const gruppen = new Map<string, typeof termine>();
+for (const x of termine) {
+  const d = datum(x.t.datum);
+  const k = `${d.monat} ${d.jahr}`;
+  if (!gruppen.has(k)) gruppen.set(k, []);
+  gruppen.get(k)!.push(x);
+}
+---
+
+<Seite titel="Veranstaltungen" beschreibung="Alle kommenden Veranstaltungen von Coworking Eichsfeld: After Work, Gründungsberatung, DigiKidz und mehr.">
+  <Seitenkopf
+    kicker="Veranstaltungen"
+    titel="Was bei uns los ist"
+    text="Hier veröffentlichen wir alle unsere Aktivitäten und Events. Wir freuen uns über Gäste und besonders über Veranstaltungen in unseren Räumlichkeiten!"
+  >
+    <a class="knopf knopf--rahmen" href={mailto("Eigene Veranstaltung im Coworking Eichsfeld")}>Eigene Veranstaltung anfragen</a>
+  </Seitenkopf>
+
+  <section class="abschnitt abschnitt--weiss">
+    <div class="container">
+      {termine.length === 0 && <p>Gerade sind keine Termine eingetragen. Schau bald wieder vorbei!</p>}
+      {[...gruppen].map(([monat, liste]) => (
+        <section class="monat">
+          <h2>{monat}</h2>
+          <div class="raster">
+            {liste.map(({ v, t }) => <TerminKarte v={v} t={t} />)}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <Aufruf />
+</Seite>
+
+<style>
+  .monat + .monat {
+    margin-top: 56px;
+  }
+  .monat h2 {
+    font-size: 1.3rem;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gruen-hell);
+    margin-bottom: 24px;
+  }
+</style>

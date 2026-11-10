@@ -1,0 +1,233 @@
+---
+import { Image } from "astro:assets";
+import Seite from "../layouts/Seite.astro";
+import Seitenkopf from "./Seitenkopf.astro";
+import Tarife from "./Tarife.astro";
+import Zusatz from "./Zusatz.astro";
+import Aufruf from "./Aufruf.astro";
+import { verein, mailto, tel } from "../data/site";
+import type { Standort } from "../data/standorte";
+import { url } from "../lib/url";
+
+interface Props {
+  s: Standort;
+}
+const { s } = Astro.props;
+---
+
+<Seite titel={`Coworking ${s.name}`} beschreibung={`Coworking Space in ${s.name}: ${s.untertitel}. ${s.adresse}.`}>
+  <Seitenkopf kicker="Standort" titel={`Willkommen in ${s.name}`} text={s.intro} bild={s.bild} bildAlt={`Coworking Space ${s.name}`}>
+    <p class="fakten">
+      <span>{s.adresse}</span>
+      <a href={tel(s.telefon)}>{s.telefon}</a>
+    </p>
+    <div class="knoepfe">
+      <a class="knopf" href="#preise">Preise & Tickets</a>
+      <a class="knopf knopf--rahmen" href={verein.buchung} target="_blank" rel="noopener">Direkt buchen</a>
+    </div>
+  </Seitenkopf>
+
+  <section class="abschnitt abschnitt--weiss">
+    <div class="container zwei-spalten">
+      <div>
+        <span class="kicker">Was du bei uns findest</span>
+        <h2>{s.raumTitel}</h2>
+        {s.raumText.map((t) => <p>{t}</p>)}
+        {s.extraLink && (
+          <a class="knopf knopf--rahmen" href={s.extraLink.url} target="_blank" rel="noopener">{s.extraLink.titel}</a>
+        )}
+      </div>
+      <figure class="video">
+        <video controls preload="metadata" playsinline src={url(s.video) + "#t=1"}>
+          <a href={url(s.video)}>Video ansehen</a>
+        </video>
+        <figcaption>Kurzer Rundgang durch den Space in {s.name}</figcaption>
+      </figure>
+    </div>
+    <div class="container galerie">
+      {s.raumBilder.map((b) => (
+        <div class="bild-rund">
+          <Image src={b.src} alt={b.alt} widths={[400, 800]} sizes="(min-width: 880px) 380px, 100vw" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="abschnitt" id="preise">
+    <div class="container">
+      <div class="kopf">
+        <span class="kicker">Preise und Leistungen</span>
+        <h2>Dein Ticket für {s.name}</h2>
+        <p class="lead">Alle Tickets schließen WLAN, Drucker, Telefonbox, Gemeinschaftsküche und Sanitäranlagen ein.</p>
+      </div>
+      <Tarife tarife={s.tarife} standort={s.name} />
+
+      <h3 class="zwischen">Zusätzliche Leistungen</h3>
+      <div class="extras">
+        <article class="extra karte">
+          <Image src={s.meetingraum.bild} alt={`Meetingraum ${s.name}`} widths={[400, 700]} sizes="(min-width: 880px) 360px, 100vw" />
+          <div>
+            <h4>Meetingraum</h4>
+            <p class="preis"><strong>{s.meetingraum.preis} €</strong> pro Stunde <span>zzgl. 19 % MwSt.</span></p>
+            <p>Unser Meetingraum für bis zu {s.meetingraum.personen} Personen – meldet euch gerne bei uns.</p>
+            <a class="knopf knopf--rahmen" href={mailto(`Meetingraum ${s.name}`)}>Anfragen</a>
+          </div>
+        </article>
+        {s.ganzerSpace && (
+          <article class="extra karte ohne-bild">
+            <div>
+              <h4>Gesamter Space</h4>
+              <p class="preis"><strong>nach Absprache</strong> für Veranstaltungen</p>
+              <p>Für Veranstaltungen wie Lesungen, Workshops, Seminare oder Vereinstreffen möglich.</p>
+              <a class="knopf knopf--rahmen" href={mailto(`Veranstaltung im Space ${s.name}`)}>Anfragen</a>
+            </div>
+          </article>
+        )}
+      </div>
+
+      <h3 class="zwischen">Weitere Tickets</h3>
+      <Zusatz />
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--weiss">
+    <div class="container zwei-spalten oben">
+      <div>
+        <span class="kicker">Ausstattung</span>
+        <h2>Das ist überall inklusive</h2>
+        <ul class="haken">
+          {s.ausstattung.map((a) => <li>{a}</li>)}
+        </ul>
+      </div>
+      <div>
+        {s.grundriss && (
+          <figure class="grundriss">
+            <Image src={s.grundriss.src} alt={`Grundriss des Coworking Space ${s.name}`} widths={[600, 1200]} sizes="(min-width: 880px) 560px, 100vw" />
+            <figcaption>{s.grundriss.text}</figcaption>
+          </figure>
+        )}
+        <div class="ansprechpartner karte">
+          <Image src={s.ansprechpartner.foto} alt="" width={96} height={96} class="foto" />
+          <div>
+            <p class="klein">Noch Fragen? Dein Ansprechpartner vor Ort:</p>
+            <h3>{s.ansprechpartner.name}</h3>
+            <p>
+              <a href={tel(s.telefon)}>{s.telefon}</a><br />
+              <a href={mailto(`Frage zum Standort ${s.name}`)}>{verein.email}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Aufruf />
+</Seite>
+
+<style>
+  .fakten {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .video {
+    margin: 0;
+  }
+  .video video {
+    width: 100%;
+    max-height: 560px;
+    border-radius: var(--radius);
+    background: #000;
+  }
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--text-leise);
+    margin-top: 10px;
+  }
+  .galerie {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .galerie .bild-rund {
+    aspect-ratio: 3 / 2;
+  }
+  .zwischen {
+    margin-top: 56px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+  }
+  .extras {
+    display: grid;
+    gap: 20px;
+  }
+  @media (min-width: 880px) {
+    .extras {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  .extra {
+    display: grid;
+  }
+  @media (min-width: 600px) {
+    .extra:not(.ohne-bild) {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+  .extra img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 200px;
+  }
+  .extra > div {
+    padding: 24px;
+  }
+  .extra .preis span {
+    font-size: 0.8rem;
+    color: var(--text-leise);
+  }
+  .extra .preis strong {
+    font-size: 1.3rem;
+    color: var(--gruen-dunkel);
+  }
+  .oben {
+    align-items: start;
+  }
+  .grundriss {
+    margin: 0 0 28px;
+  }
+  .grundriss img {
+    border-radius: var(--radius-klein);
+    border: 1px solid var(--linie);
+    background: #fff;
+  }
+  .ansprechpartner {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 24px;
+    background: var(--hintergrund);
+    box-shadow: none;
+  }
+  .ansprechpartner :global(.foto) {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .ansprechpartner h3 {
+    margin-bottom: 4px;
+  }
+  .ansprechpartner p {
+    margin: 0;
+  }
+  .klein {
+    font-size: 0.85rem;
+    color: var(--text-leise);
+  }
+</style>

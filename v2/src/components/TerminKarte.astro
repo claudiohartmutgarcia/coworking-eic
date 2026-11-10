@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import { datum, uhrzeit, type Termin, type Veranstaltung } from "../lib/termine";
+import { url } from "../lib/url";
+
+interface Props {
+  v: Veranstaltung;
+  t: Termin;
+  mitBild?: boolean;
+}
+const { v, t, mitBild = true } = Astro.props;
+const d = datum(t.datum);
+---
+
+<article class="termin karte">
+  {mitBild && (
+    <div class="bild">
+      <Image src={v.data.bild} alt={v.data.bildAlt} width={480} height={480} />
+    </div>
+  )}
+  <div class="inhalt">
+    <div class="datum" aria-hidden="true">
+      <span class="tag">{d.tag}</span>
+      <span class="monat">{d.monatKurz}</span>
+    </div>
+    <div>
+      <p class="wann">{d.lang} · {uhrzeit(t)}</p>
+      <h3><a href={url(`/veranstaltungen/${v.id}`)}>{v.data.titel}</a></h3>
+      <p class="kurz">{v.data.kurz}</p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .termin {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .termin:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 2px 4px rgb(12 77 72 / 0.08), 0 16px 36px rgb(12 77 72 / 0.14);
+  }
+  .bild {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--gruen-hell);
+  }
+  .bild img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .inhalt {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+  }
+  .datum {
+    flex-shrink: 0;
+    width: 58px;
+    height: 64px;
+    border-radius: 12px;
+    background: var(--gruen);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .tag {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .monat {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .wann {
+    font-size: 0.85rem;
+    color: var(--text-leise);
+    margin-bottom: 4px;
+  }
+  h3 {
+    margin-bottom: 6px;
+  }
+  h3 a {
+    text-decoration: none;
+    color: var(--gruen-dunkel);
+  }
+  /* ganze Karte klickbar */
+  h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .kurz {
+    font-size: 0.95rem;
+    color: var(--text-leise);
+    margin: 0;
+  }
+</style>

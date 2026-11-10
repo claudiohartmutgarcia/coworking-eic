@@ -1,0 +1,27 @@
+---
+// PLATZHALTER: Die neue Datenschutzerklärung liefert der Verein. Bis dahin steht hier nur ein Hinweis.
+// Den Text bitte nicht selbst formulieren, sondern 1:1 aus der Vorlage übernehmen.
+import Seite from "../layouts/Seite.astro";
+import { verein } from "../data/site";
+---
+
+<Seite titel="Datenschutz">
+  <section class="abschnitt">
+    <div class="container prosa">
+      <h1>Datenschutzerklärung</h1>
+      <p class="hinweis">
+        Die Datenschutzerklärung für die neue Website wird gerade überarbeitet und folgt in Kürze. Bei Fragen zum Datenschutz erreichst du uns unter
+        <a href={`mailto:${verein.email}`}>{verein.email}</a>.
+      </p>
+    </div>
+  </section>
+</Seite>
+
+<style>
+  .hinweis {
+    background: var(--akzent-hell);
+    border-left: 4px solid var(--akzent);
+    padding: 16px 20px;
+    border-radius: 8px;
+  }
+</style>

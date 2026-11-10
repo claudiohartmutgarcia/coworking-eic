@@ -2,3 +2,7 @@ node_modules/
 .DS_Store
 # Arbeitsdaten vom Kopieren der alten WordPress-Seite (Aufzeichnung, Vergleichsbilder). Gehören nicht zur Website.
 remake/
+
+# Version 2 (Astro)
+v2/dist/
+v2/.astro/

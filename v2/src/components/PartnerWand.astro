@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import { partner } from "../data/partner";
+import { mailto } from "../data/site";
+---
+
+<section class="abschnitt abschnitt--weiss">
+  <div class="container">
+    <div class="kopf kopf--mitte">
+      <span class="kicker">Netzwerk</span>
+      <h2>Unsere Netzwerkpartner</h2>
+      <p class="lead">Gemeinsam mit Unternehmen, Initiativen und anderen Spaces bringen wir die Region voran.</p>
+    </div>
+    <ul class="logos">
+      {partner.map((p) => (
+        <li>
+          <a href={p.url} target="_blank" rel="noopener" title={p.name}>
+            <Image src={p.logo} alt={p.name} height={80} />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mitte">
+      <a class="knopf knopf--rahmen" href={mailto("Kooperation mit Coworking Eichsfeld")}>Werde Kooperationspartner</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .logos {
+    list-style: none;
+    margin: 0 0 40px;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+  }
+  .logos a {
+    display: grid;
+    place-items: center;
+    height: 104px;
+    padding: 16px;
+    border: 1px solid var(--linie);
+    border-radius: var(--radius-klein);
+    background: #fff;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .logos a:hover {
+    border-color: var(--gruen);
+    transform: translateY(-2px);
+  }
+  .logos img {
+    max-height: 64px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.8;
+    transition: filter 0.2s, opacity 0.2s;
+  }
+  .logos a:hover img {
+    filter: none;
+    opacity: 1;
+  }
+  .mitte {
+    text-align: center;
+    margin: 0;
+  }
+</style>

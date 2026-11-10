@@ -1,0 +1,376 @@
+---
+import { Image } from "astro:assets";
+import Seite from "../layouts/Seite.astro";
+import TerminKarte from "../components/TerminKarte.astro";
+import PartnerWand from "../components/PartnerWand.astro";
+import Aufruf from "../components/Aufruf.astro";
+import { standorte } from "../data/standorte";
+import { verein, social } from "../data/site";
+import { kommendeTermine } from "../lib/termine";
+import { url } from "../lib/url";
+import hero from "../assets/bilder/netzwerktreffen.jpg";
+import community from "../assets/bilder/community.jpg";
+import region from "../assets/bilder/space-heiligenstadt.jpg";
+
+const naechste = (await kommendeTermine()).slice(0, 3);
+
+const zielgruppen = ["Selbstständige", "Mitarbeitende", "Unternehmen", "Gründende", "Studierende", "Startups"];
+
+const vorteile = [
+  {
+    titel: "Alternative zu Homeoffice & Büro",
+    punkte: ["geeignete Ausstattung", "produktives Arbeitsumfeld", "volle Trennung zwischen Beruf und Privatem"],
+    link: "/preise",
+    icon: "M4 20V9l8-5 8 5v11h-5v-6H9v6H4z",
+  },
+  {
+    titel: "Heimaturlaub verlängern",
+    punkte: ["weniger pendeln", "weniger CO₂", "mehr Zeit in der Heimat"],
+    link: "/unsere-community",
+    icon: "M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",
+  },
+  {
+    titel: "Netzwerken in der Region",
+    punkte: ["offen für alle", "kreativ & interdisziplinär", "hilfsbereit"],
+    link: "/unsere-community",
+    icon: "M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 19c0-3 2.7-5 6-5s6 2 6 5M12 19c0-3 2.7-5 6-5s4 1.5 4 4",
+  },
+  {
+    titel: "Professionelles Arbeitsumfeld",
+    punkte: ["Geschäftspartner:innen treffen", "Workshops halten", "Videokonferenzen durchführen"],
+    link: "/preise",
+    icon: "M3 7h18v12H3zM8 7V5h8v2M3 12h18",
+  },
+  {
+    titel: "Inspirierende Veranstaltungen",
+    punkte: ["gemeinsam mit NewWorkShop Eichsfeld", "inspirierende Atmosphäre", "vielfältige Themen"],
+    link: "/veranstaltungen",
+    icon: "M4 6h16v14H4zM4 10h16M8 3v5M16 3v5",
+  },
+  {
+    titel: "Pioniere in Nordthüringen",
+    punkte: ["entschlossen und zukunftsorientiert", "gemeinschaftliche Organisation", "Wettbewerbsfähigkeit der Region steigern"],
+    link: "/der-verein",
+    icon: "M12 3c3 2 5 5.5 5 10l-2 3H9l-2-3c0-4.5 2-8 5-10zm0 7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM9 19l-2 2M15 19l2 2",
+  },
+];
+---
+
+<Seite titel="Startseite">
+  <!-- Hero -->
+  <section class="hero">
+    <Image src={hero} alt="Menschen im Gespräch im Coworking Space Heiligenstadt" widths={[800, 1400, 2000]} sizes="100vw" loading="eager" class="hero-bild" />
+    <div class="hero-schleier"></div>
+    <div class="container hero-inhalt">
+      <span class="kicker">Coworking im Eichsfeld · seit 2021</span>
+      <h1>vernetzen,<br />inspirieren,<br />gemeinsam arbeiten.</h1>
+      <p class="hero-lead">
+        Ein inspirierender und innovativer Arbeitsplatz in Heiligenstadt und Leinefelde – für alle, die mehr wollen als Küchentisch oder Pendelstrecke.
+      </p>
+      <div class="knoepfe">
+        <a class="knopf knopf--akzent" href={verein.buchung} target="_blank" rel="noopener">Arbeitsplatz direkt buchen</a>
+        <a class="knopf knopf--hell" href={url("/preise")}>Preise ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zielgruppen -->
+  <section class="zielgruppen">
+    <div class="container">
+      <p>Ein Arbeitsplatz für</p>
+      <ul>
+        {zielgruppen.map((z) => <li><a href={url("/preise")}>{z}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Standorte -->
+  <section class="abschnitt">
+    <div class="container">
+      <div class="kopf">
+        <span class="kicker">Zwei Standorte</span>
+        <h2>Dein Coworking Space im Eichsfeld</h2>
+        <p class="lead">Flexibel mieten – vom Tagesticket bis zum festen Schreibtisch mit eigenem Schlüssel.</p>
+      </div>
+      <div class="standorte">
+        {standorte.map((s) => (
+          <a class="standort karte" href={url("/" + s.slug)}>
+            <div class="standort-bild">
+              <Image src={s.bild} alt={`Coworking Space ${s.name}`} widths={[600, 1000]} sizes="(min-width: 880px) 560px, 100vw" />
+            </div>
+            <div class="standort-text">
+              <h3>{s.name}</h3>
+              <p>{s.untertitel}</p>
+              <p class="adresse">{s.adresse}</p>
+              <span class="mehr">Standort entdecken →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vorteile -->
+  <section class="abschnitt abschnitt--weiss">
+    <div class="container">
+      <div class="kopf kopf--mitte">
+        <span class="kicker">Warum Coworking?</span>
+        <h2>Ein Coworking Space im Eichsfeld bietet euch</h2>
+      </div>
+      <div class="raster vorteile">
+        {vorteile.map((v) => (
+          <a class="vorteil" href={url(v.link)}>
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d={v.icon} /></svg>
+            </span>
+            <h3>{v.titel}</h3>
+            <ul>{v.punkte.map((p) => <li>{p}</li>)}</ul>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Veranstaltungen -->
+  <section class="abschnitt">
+    <div class="container">
+      <div class="kopf-zeile">
+        <div class="kopf">
+          <span class="kicker">Was ansteht</span>
+          <h2>Veranstaltungen</h2>
+        </div>
+        <a class="knopf knopf--rahmen" href={url("/veranstaltungen")}>Alle Termine</a>
+      </div>
+      {naechste.length > 0 ? (
+        <div class="raster">
+          {naechste.map(({ v, t }) => <TerminKarte v={v} t={t} />)}
+        </div>
+      ) : (
+        <p>Gerade sind keine Termine eingetragen. Schau bald wieder vorbei!</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Community -->
+  <section class="abschnitt abschnitt--gruen">
+    <div class="container zwei-spalten">
+      <div class="bild-rund collage">
+        <Image src={community} alt="Eröffnungsfeier mit vielen Gästen im Coworking Space" widths={[600, 1000]} sizes="(min-width: 880px) 560px, 100vw" />
+      </div>
+      <div>
+        <span class="kicker">Gemeinsam statt einsam</span>
+        <h2>Das Herz eines Coworking Space sind seine Menschen</h2>
+        <p>
+          Unsere Mitglieder kommen aus unterschiedlichen Branchen und haben verschiedene Beweggründe. Was uns eint, sind unsere Werte – und das Leitprinzip:
+        </p>
+        <p class="zitat">„{verein.leitprinzip}“</p>
+        <div class="knoepfe">
+          <a class="knopf knopf--akzent" href={url("/unsere-community")}>Community kennenlernen</a>
+          <a class="knopf knopf--hell" href={url("/der-verein")}>Über den Verein</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Auf dem Laufenden bleiben -->
+  <section class="abschnitt">
+    <div class="container zwei-spalten">
+      <div>
+        <span class="kicker">Auf dem Laufenden bleiben</span>
+        <h2>Neuigkeiten aus dem Eichsfeld</h2>
+        <p class="lead">Folge uns, dann verpasst du keine Veranstaltung und keine Neuigkeit aus unseren Spaces.</p>
+        <div class="knoepfe">
+          {social.map((s) => <a class="knopf knopf--rahmen" href={s.url} target="_blank" rel="noopener">{s.name}</a>)}
+        </div>
+      </div>
+      <div class="bild-rund region">
+        <Image src={region} alt="Der leere Coworking Space in Heiligenstadt am Abend" widths={[600, 1000]} sizes="(min-width: 880px) 560px, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <PartnerWand />
+  <Aufruf />
+</Seite>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(88vh, 760px);
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    overflow: hidden;
+  }
+  .hero :global(.hero-bild) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-schleier {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(8 51 47 / 0.35) 0%, rgb(8 51 47 / 0.7) 40%, rgb(8 51 47 / 0.94) 100%);
+  }
+  .hero-inhalt {
+    position: relative;
+    padding-block: 120px clamp(48px, 8vw, 88px);
+  }
+  .hero .kicker {
+    color: var(--akzent);
+  }
+  .hero h1 {
+    color: #fff;
+    font-size: clamp(2.4rem, 7vw, 4.8rem);
+    font-weight: 600;
+    line-height: 1.02;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 300;
+    max-width: 46ch;
+    margin-bottom: 28px;
+  }
+
+  .zielgruppen {
+    background: var(--gruen-dunkel);
+    color: rgb(255 255 255 / 0.7);
+    padding-block: 18px;
+  }
+  .zielgruppen .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+  }
+  .zielgruppen p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .zielgruppen ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .zielgruppen a {
+    display: block;
+    padding: 4px 14px;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: 999px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .zielgruppen a:hover {
+    background: #fff;
+    color: var(--gruen);
+  }
+
+  .standorte {
+    display: grid;
+    gap: 24px;
+  }
+  @media (min-width: 880px) {
+    .standorte {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .standort {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+  }
+  .standort:hover {
+    transform: translateY(-4px);
+    color: inherit;
+  }
+  .standort-bild {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .standort-bild img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .standort:hover .standort-bild img {
+    transform: scale(1.04);
+  }
+  .standort-text {
+    padding: 24px 28px 28px;
+  }
+  .standort-text h3 {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+  .adresse {
+    color: var(--text-leise);
+    font-size: 0.92rem;
+  }
+  .mehr {
+    font-weight: 600;
+    color: var(--gruen);
+  }
+
+  .vorteil {
+    display: block;
+    padding: 28px;
+    border-radius: var(--radius);
+    background: var(--hintergrund);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .vorteil:hover {
+    background: var(--gruen-hell);
+    transform: translateY(-3px);
+    color: inherit;
+  }
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--gruen);
+    color: #fff;
+    margin-bottom: 18px;
+  }
+  .vorteil ul {
+    margin: 0;
+    padding-left: 1.1em;
+    color: var(--text-leise);
+    font-size: 0.95rem;
+  }
+
+  .kopf-zeile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: clamp(32px, 5vw, 48px);
+  }
+  .kopf-zeile .kopf {
+    margin-bottom: 0;
+  }
+
+  .collage,
+  .region {
+    aspect-ratio: 4 / 3;
+  }
+  .zitat {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--akzent);
+    margin: 20px 0 28px;
+  }
+</style>

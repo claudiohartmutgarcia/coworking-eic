@@ -1,0 +1,15 @@
+---
+import Seite from "../layouts/Seite.astro";
+import { url } from "../lib/url";
+---
+
+<Seite titel="Seite nicht gefunden">
+  <section class="abschnitt">
+    <div class="container">
+      <span class="kicker">Fehler 404</span>
+      <h1>Diese Seite gibt es nicht (mehr).</h1>
+      <p class="lead">Vielleicht hat sie eine neue Adresse bekommen. Probier es über die Startseite.</p>
+      <a class="knopf" href={url("/")}>Zur Startseite</a>
+    </div>
+  </section>
+</Seite>

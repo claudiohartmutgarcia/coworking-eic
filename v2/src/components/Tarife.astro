@@ -1,0 +1,123 @@
+---
+import type { Tarif } from "../data/standorte";
+import { mailto } from "../data/site";
+
+interface Props {
+  tarife: Tarif[];
+  standort: string;
+}
+const { tarife, standort } = Astro.props;
+const euro = (n: number) => n.toLocaleString("de-DE");
+---
+
+<div class="tarife" style={`--spalten: ${tarife.length === 6 ? 3 : tarife.length}`}>
+  {tarife.map((t) => {
+    const anfrage = t.link === "anfrage";
+    return (
+      <article class:list={["tarif", { hervor: t.hervorgehoben }]}>
+        {t.hervorgehoben && <span class="band">Beliebt</span>}
+        <h3>{t.name}</h3>
+        <p class="umfang">{t.umfang}</p>
+        <p class="preis">
+          {t.preis !== undefined ? (
+            <>
+              <span class="betrag">{euro(t.preis)} €</span>
+              <span class="einheit">/ {t.einheit}</span>
+            </>
+          ) : (
+            <span class="betrag klein">{t.preisText}</span>
+          )}
+        </p>
+        {t.preis !== undefined && <p class="mwst">zzgl. 19 % MwSt.</p>}
+        <p class="text">{t.text}</p>
+        <a
+          class:list={["knopf", { "knopf--rahmen": !t.hervorgehoben }]}
+          href={anfrage ? mailto(`Anfrage ${t.name} – ${standort}`) : t.link}
+          {...(anfrage ? {} : { target: "_blank", rel: "noopener" })}
+        >
+          {anfrage ? "Anfragen" : "Buchen"}
+        </a>
+      </article>
+    );
+  })}
+</div>
+
+<style>
+  .tarife {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  }
+  @media (min-width: 1080px) {
+    .tarife {
+      grid-template-columns: repeat(var(--spalten), 1fr);
+      gap: 16px;
+    }
+    .tarif {
+      padding: 24px 20px;
+    }
+  }
+  .tarif {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--flaeche);
+    border: 1px solid var(--linie);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+  }
+  .tarif.hervor {
+    border: 2px solid var(--gruen);
+    box-shadow: var(--schatten);
+  }
+  .band {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: var(--akzent);
+    color: var(--gruen-dunkel);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 999px;
+  }
+  h3 {
+    margin-bottom: 2px;
+  }
+  .umfang {
+    font-size: 0.9rem;
+    color: var(--text-leise);
+    margin-bottom: 14px;
+  }
+  .preis {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .betrag {
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: var(--gruen-dunkel);
+    line-height: 1.1;
+  }
+  .betrag.klein {
+    font-size: 1.4rem;
+  }
+  .einheit {
+    color: var(--text-leise);
+  }
+  .mwst {
+    font-size: 0.8rem;
+    color: var(--text-leise);
+    margin: 2px 0 0;
+  }
+  .text {
+    font-size: 0.95rem;
+    margin: 14px 0 22px;
+    flex-grow: 1;
+  }
+  .knopf {
+    justify-content: center;
+  }
+</style>

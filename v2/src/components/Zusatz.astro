@@ -1,0 +1,53 @@
+---
+import { zusatz } from "../data/standorte";
+import { mailto } from "../data/site";
+import { url } from "../lib/url";
+---
+
+<div class="zusatz">
+  {zusatz.map((z) => (
+    <article>
+      <h4>{z.name}</h4>
+      <p class="preis">{z.preis}<span>{z.hinweis}</span></p>
+      <p class="text">{z.text}</p>
+      <a href={z.link === "anfrage" ? mailto(`Anfrage ${z.name}`) : url(z.link)}>{z.linkText} →</a>
+    </article>
+  ))}
+</div>
+
+<style>
+  .zusatz {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  }
+  article {
+    padding: 22px;
+    border-radius: var(--radius);
+    background: var(--akzent-hell);
+    display: flex;
+    flex-direction: column;
+  }
+  h4 {
+    margin-bottom: 4px;
+  }
+  .preis {
+    font-weight: 600;
+    color: var(--gruen-dunkel);
+    display: flex;
+    flex-direction: column;
+  }
+  .preis span {
+    font-weight: 400;
+    font-size: 0.82rem;
+    color: var(--text-leise);
+  }
+  .text {
+    font-size: 0.95rem;
+    flex-grow: 1;
+  }
+  a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

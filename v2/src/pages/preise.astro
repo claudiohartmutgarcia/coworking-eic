@@ -1,0 +1,176 @@
+---
+import Seite from "../layouts/Seite.astro";
+import Seitenkopf from "../components/Seitenkopf.astro";
+import Zusatz from "../components/Zusatz.astro";
+import Aufruf from "../components/Aufruf.astro";
+import { standorte } from "../data/standorte";
+import { mailto } from "../data/site";
+import { url } from "../lib/url";
+
+// Alle Tarifnamen in der Reihenfolge des ersten Standorts, danach die übrigen.
+const namen = [...new Set(standorte.flatMap((s) => s.tarife.map((t) => t.name)))];
+const zelle = (slug: string, name: string) => standorte.find((s) => s.slug === slug)!.tarife.find((t) => t.name === name);
+const beschreibung = (name: string) => standorte.flatMap((s) => s.tarife).find((t) => t.name === name)!;
+---
+
+<Seite titel="Preise und Leistungen" beschreibung="Preise für Coworking in Heiligenstadt und Leinefelde: Tageskarte, 10er-Karte, flexibler und fester Arbeitsplatz, Meetingraum.">
+  <Seitenkopf
+    kicker="Preise und Leistungen"
+    titel="Flexibel arbeiten – zum fairen Preis"
+    text="Die Plätze lassen sich flexibel anmieten. Alle Personen können mit ihrem Ticket die Infrastruktur wie WLAN, Drucker, Telefonbox, Gemeinschaftsküche und Sanitäranlagen nach Bedarf nutzen. Wer einen eigenen Arbeitsplatz mit Abschließmöglichkeit möchte, kann auch einen festen Arbeitsplatz mieten."
+  />
+
+  <section class="abschnitt abschnitt--weiss">
+    <div class="container">
+      <div class="tabelle-rahmen">
+        <table>
+          <caption class="sr-only">Preise je Standort (netto, zzgl. 19 % MwSt.)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Ticket</th>
+              {standorte.map((s) => <th scope="col"><a href={url("/" + s.slug)}>{s.name}</a></th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {namen.map((n) => {
+              const b = beschreibung(n);
+              return (
+                <tr>
+                  <th scope="row">
+                    <strong>{n}</strong>
+                    <span>{b.umfang}</span>
+                  </th>
+                  {standorte.map((s) => {
+                    const t = zelle(s.slug, n);
+                    if (!t) return <td class="leer">–</td>;
+                    const anfrage = t.link === "anfrage";
+                    return (
+                      <td>
+                        <span class="preis">{t.preis !== undefined ? `${t.preis} €` : t.preisText}</span>
+                        {t.einheit && <span class="einheit">pro {t.einheit}</span>}
+                        <a
+                          href={anfrage ? mailto(`Anfrage ${t.name} – ${s.name}`) : t.link}
+                          {...(anfrage ? {} : { target: "_blank", rel: "noopener" })}
+                        >
+                          {anfrage ? "Anfragen" : "Buchen"}
+                        </a>
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+            <tr>
+              <th scope="row">
+                <strong>Meetingraum</strong>
+                <span>pro Stunde buchbar</span>
+              </th>
+              {standorte.map((s) => (
+                <td>
+                  <span class="preis">{s.meetingraum.preis} €</span>
+                  <span class="einheit">pro Stunde, bis {s.meetingraum.personen} Personen</span>
+                  <a href={mailto(`Meetingraum ${s.name}`)}>Anfragen</a>
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <th scope="row">
+                <strong>Gesamter Space</strong>
+                <span>für Lesungen, Workshops, Seminare, Vereinstreffen</span>
+              </th>
+              {standorte.map((s) =>
+                s.ganzerSpace ? (
+                  <td>
+                    <span class="preis klein">nach Absprache</span>
+                    <a href={mailto(`Veranstaltung im Space ${s.name}`)}>Anfragen</a>
+                  </td>
+                ) : (
+                  <td class="leer">–</td>
+                ),
+              )}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hinweis">Alle Preise netto zzgl. 19 % MwSt. Gebucht wird über unser Buchungssystem cobot.</p>
+    </div>
+  </section>
+
+  <section class="abschnitt">
+    <div class="container">
+      <div class="kopf">
+        <span class="kicker">Zusätzliche Tickets</span>
+        <h2>Mitglied werden, verschenken, verbinden</h2>
+      </div>
+      <Zusatz />
+    </div>
+  </section>
+
+  <Aufruf />
+</Seite>
+
+<style>
+  .tabelle-rahmen {
+    overflow-x: auto;
+    border: 1px solid var(--linie);
+    border-radius: var(--radius);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+  }
+  thead th {
+    background: var(--gruen);
+    color: #fff;
+    text-align: left;
+    padding: 16px 20px;
+    font-weight: 600;
+  }
+  thead a {
+    color: #fff;
+  }
+  tbody th,
+  td {
+    padding: 18px 20px;
+    border-top: 1px solid var(--linie);
+    text-align: left;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) {
+    background: var(--hintergrund);
+  }
+  tbody th {
+    font-weight: 400;
+    width: 38%;
+  }
+  tbody th span,
+  .einheit {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-leise);
+  }
+  .preis {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--gruen-dunkel);
+  }
+  .preis.klein {
+    font-size: 1rem;
+  }
+  td a {
+    display: inline-block;
+    margin-top: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .leer {
+    color: var(--text-leise);
+  }
+  .hinweis {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--text-leise);
+  }
+</style>

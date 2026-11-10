@@ -9,6 +9,7 @@ Statische Kopie der bisherigen WordPress-Seite von Coworking Eichsfeld e.V. Es g
 | `termine/beschreibungen/` | Beschreibungstext je Veranstaltung (HTML) |
 | `termine/vorlage-detail.html` | Vorlage für die Detailseiten der Veranstaltungen |
 | `tools/` | Kleine Node-Skripte (keine Abhängigkeiten, nur Node.js ab Version 20) |
+| `v2/` | **Version 2:** neu gebaute Website mit Astro, siehe [v2/README.md](v2/README.md). Vorschau unter https://claudiohartmutgarcia.github.io/coworking-eic/v2/ |
 | `remake/` | Arbeitsdaten vom Kopieren der alten Seite. Gehört nicht zur Website und kann gelöscht werden. |
 
 ## Vorschau

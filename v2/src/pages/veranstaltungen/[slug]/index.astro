@@ -1,0 +1,180 @@
+---
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import Seite from "../../../layouts/Seite.astro";
+import { alleVeranstaltungen, datum, uhrzeit, heute, googleKalender, type Veranstaltung } from "../../../lib/termine";
+import { url } from "../../../lib/url";
+
+export async function getStaticPaths() {
+  const alle = await alleVeranstaltungen();
+  return alle.map((v) => ({ params: { slug: v.id }, props: { v } }));
+}
+
+const { v } = Astro.props as { v: Veranstaltung };
+const { Content } = await render(v);
+const h = heute();
+const kommend = v.data.termine.filter((t) => t.datum >= h).sort((a, b) => a.datum.localeCompare(b.datum));
+const letzter = [...v.data.termine].sort((a, b) => b.datum.localeCompare(a.datum))[0];
+const naechster = kommend[0];
+const seite = new URL(url(`/veranstaltungen/${v.id}`), Astro.site).href;
+---
+
+<Seite titel={v.data.titel} beschreibung={v.data.kurz}>
+  <article>
+    <header class="kopf-event">
+      <div class="container innen">
+        <div>
+          <a class="zurueck" href={url("/veranstaltungen")}>← Alle Veranstaltungen</a>
+          <h1>{v.data.titel}</h1>
+          <p class="lead">{v.data.kurz}</p>
+          {!naechster && (
+            <p class="vorbei">
+              Diese Veranstaltung hat bereits stattgefunden. Aktuelle Termine findest du unter <a href={url("/veranstaltungen")}>Veranstaltungen</a>.
+            </p>
+          )}
+        </div>
+        <div class="plakat bild-rund">
+          <Image src={v.data.bild} alt={v.data.bildAlt} widths={[400, 800]} sizes="(min-width: 880px) 420px, 100vw" loading="eager" />
+        </div>
+      </div>
+    </header>
+
+    <div class="container koerper">
+      <div class="prosa">
+        <Content />
+      </div>
+
+      <aside class="seitenleiste">
+        <div class="box karte">
+          <h2>{naechster ? "Nächster Termin" : "Zuletzt am"}</h2>
+          <p class="gross">{datum((naechster ?? letzter).datum).lang}</p>
+          <p>{uhrzeit(naechster ?? letzter)}</p>
+          <h2>Veranstaltungsort</h2>
+          <p>
+            {v.data.ort}
+            {v.data.adresse && (<><br />{v.data.adresse}</>)}
+          </p>
+          {v.data.anmeldung && naechster && (
+            <a class="knopf knopf--akzent breit" href={v.data.anmeldung} target="_blank" rel="noopener">Jetzt anmelden</a>
+          )}
+          {naechster && (
+            <div class="kalender">
+              <a class="knopf knopf--rahmen breit" href={googleKalender(v, naechster, seite)} target="_blank" rel="noopener">+ Google Kalender</a>
+              <a class="knopf knopf--rahmen breit" href={url(`/veranstaltungen/${v.id}/termine.ics`)}>+ iCal / Outlook</a>
+            </div>
+          )}
+        </div>
+
+        {kommend.length > 1 && (
+          <div class="box karte">
+            <h2>Alle kommenden Termine</h2>
+            <ul>
+              {kommend.map((t) => <li><strong>{datum(t.datum).lang}</strong><br />{uhrzeit(t)}</li>)}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </article>
+</Seite>
+
+<style>
+  .kopf-event {
+    background: var(--gruen);
+    color: rgb(255 255 255 / 0.88);
+    padding-block: clamp(40px, 6vw, 72px);
+  }
+  .kopf-event h1 {
+    color: #fff;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+  }
+  .kopf-event .lead {
+    color: rgb(255 255 255 / 0.85);
+  }
+  .innen {
+    display: grid;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (min-width: 880px) {
+    .innen {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  .zurueck {
+    color: var(--akzent);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .vorbei {
+    background: rgb(255 255 255 / 0.1);
+    border-left: 3px solid var(--akzent);
+    padding: 12px 16px;
+    border-radius: 6px;
+  }
+  .vorbei a {
+    color: #fff;
+  }
+  .plakat {
+    max-width: 420px;
+    aspect-ratio: 1;
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.25);
+  }
+  .koerper {
+    display: grid;
+    gap: 40px;
+    padding-block: clamp(40px, 6vw, 72px);
+  }
+  @media (min-width: 960px) {
+    .koerper {
+      grid-template-columns: 1fr 340px;
+      align-items: start;
+    }
+    .seitenleiste {
+      position: sticky;
+      top: 100px;
+    }
+  }
+  .box {
+    padding: 24px;
+  }
+  .box + .box {
+    margin-top: 20px;
+  }
+  .box h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-leise);
+    margin-bottom: 6px;
+  }
+  .box p {
+    margin-bottom: 18px;
+  }
+  .gross {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gruen-dunkel);
+    margin-bottom: 0 !important;
+  }
+  .breit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  .kalender {
+    margin-top: 8px;
+  }
+  .box ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .box li {
+    padding: 10px 0;
+    border-top: 1px solid var(--linie);
+    font-size: 0.95rem;
+  }
+</style>

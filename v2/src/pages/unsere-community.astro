@@ -1,0 +1,146 @@
+---
+import { Image } from "astro:assets";
+import Seite from "../layouts/Seite.astro";
+import Seitenkopf from "../components/Seitenkopf.astro";
+import PartnerWand from "../components/PartnerWand.astro";
+import Aufruf from "../components/Aufruf.astro";
+import { mitglieder, werte } from "../data/community";
+import bild from "../assets/bilder/community.jpg";
+---
+
+<Seite titel="Unsere Community" beschreibung="Die Menschen hinter Coworking Eichsfeld – und warum sie dabei sind.">
+  <Seitenkopf
+    kicker="Unsere Community"
+    titel="Menschen, die das Eichsfeld gestalten"
+    text="Das Herz eines Vereins sind seine Menschen – und insbesondere eines Coworking Space sind es die Menschen, die diesen Ort gestalten. Unsere Mitglieder kommen aus unterschiedlichen Branchen und haben verschiedene Beweggründe, die ihr hier kennenlernen könnt."
+    bild={bild}
+    bildAlt="Gäste bei einer Veranstaltung im Coworking Space"
+  />
+
+  <section class="werte-band">
+    <div class="container">
+      <h2>Was uns eint, sind unsere Werte</h2>
+      <ul>
+        {werte.map((w) => <li>{w}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="abschnitt">
+    <div class="container">
+      <div class="kopf">
+        <span class="kicker">Mitglieder</span>
+        <h2>Warum wir dabei sind</h2>
+      </div>
+      <div class="mitglieder">
+        {mitglieder.map((m) => (
+          <article class="mitglied karte">
+            <div class="foto">
+              <Image src={m.foto} alt={`Porträt ${m.name}`} widths={[300, 600]} sizes="(min-width: 700px) 280px, 100vw" />
+            </div>
+            <div class="text">
+              <h3>{m.name}</h3>
+              <p class="rolle">{m.rolle}</p>
+              <details>
+                <summary>Motivation lesen</summary>
+                {m.motivation.map((p) => <p>{p}</p>)}
+              </details>
+              {m.links.length > 0 && (
+                <ul class="links">
+                  {m.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener">{l.titel}</a></li>)}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <PartnerWand />
+  <Aufruf titel="Lust, Teil der Community zu werden?" />
+</Seite>
+
+<style>
+  .werte-band {
+    background: var(--gruen);
+    color: #fff;
+    padding-block: 40px;
+  }
+  .werte-band h2 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+  }
+  .werte-band ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .werte-band li {
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.1);
+    border: 1px solid rgb(255 255 255 / 0.25);
+  }
+  .mitglieder {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    align-items: start;
+  }
+  .foto {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--gruen-hell);
+  }
+  .foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text {
+    padding: 22px 24px 24px;
+  }
+  h3 {
+    margin-bottom: 2px;
+  }
+  .rolle {
+    color: var(--text-leise);
+    font-size: 0.92rem;
+  }
+  details {
+    border-top: 1px solid var(--linie);
+    padding-top: 12px;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--gruen);
+  }
+  details[open] summary {
+    margin-bottom: 12px;
+  }
+  details p {
+    font-size: 0.95rem;
+  }
+  .links {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .links a {
+    display: block;
+    font-size: 0.85rem;
+    padding: 3px 12px;
+    border-radius: 999px;
+    background: var(--gruen-hell);
+    text-decoration: none;
+  }
+</style>
