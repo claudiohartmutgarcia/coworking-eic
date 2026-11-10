@@ -19,7 +19,6 @@ export const navigation = [
   { titel: "Leinefelde", pfad: "/leinefelde" },
   { titel: "Preise", pfad: "/preise" },
   { titel: "Veranstaltungen", pfad: "/veranstaltungen" },
-  { titel: "Community", pfad: "/unsere-community" },
   { titel: "Verein", pfad: "/der-verein" },
   { titel: "Kontakt", pfad: "/kontakt" },
 ];

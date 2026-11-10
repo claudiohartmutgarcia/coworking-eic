@@ -1,5 +1,4 @@
 import ttg from "../assets/partner/ttg.png";
-import up from "../assets/partner/up-thueringen.jpg";
 import vr from "../assets/partner/vr-bank-mitte.jpg";
 import thex from "../assets/partner/thex.jpg";
 import mobil from "../assets/partner/mobil-goettingen.jpg";
@@ -18,7 +17,6 @@ import passage from "../assets/partner/passage84.png";
 
 export const partner = [
   { name: "VR-Bank Mitte", url: "https://www.vrbankmitte.de/startseite.html", logo: vr },
-  { name: "UP THÜRINGEN", url: "https://www.up-thueringen.de/", logo: up },
   { name: "ThEx – Thüringer Zentrum für Existenzgründungen", url: "https://www.thex.de/", logo: thex },
   { name: "Thüringer Tourismus", url: "https://thueringen.tourismusnetzwerk.info/", logo: ttg },
   { name: "mobil – Gründungsberatung Göttingen", url: "https://www.bfgoe.de/angebote/gruendungsberatung.html", logo: mobil },

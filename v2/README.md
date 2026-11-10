@@ -17,7 +17,6 @@ npm run build      # fertige Website nach v2/dist/
 | --- | --- |
 | `src/content/veranstaltungen/*.md` | **Veranstaltungen.** Eine Datei je Veranstaltung: oben Titel, Bild und Termine, darunter der Beschreibungstext. |
 | `src/data/standorte.ts` | Heiligenstadt und Leinefelde: Preise, Buchungslinks, Ausstattung, Ansprechpartner |
-| `src/data/community.ts` | Werte und Mitgliederprofile der Community-Seite |
 | `src/data/partner.ts` | Netzwerkpartner mit Logos |
 | `src/data/site.ts` | E-Mail, Telefon, Social-Media-Links, Menü |
 | `src/pages/` | Eine Datei je Seite (Impressum, Datenschutz, …) |
@@ -45,5 +44,5 @@ Der Workflow `.github/workflows/pages.yml` baut Version 2 und legt sie neben die
 - Keine Verweise mehr auf WordPress oder das Theme, keine `wp-content`-Pfade. Alte Adressen wie `/events/after-work` oder `/veranstaltungen-coworking-eichsfeld` leiten auf die neuen weiter.
 - Keine eingebettete Google-Karte und keine extern geladenen Schriften oder Icons. Die Schrift (Poppins) wird selbst ausgeliefert, Karten öffnen sich erst auf Klick bei OpenStreetMap.
 - Kein Cookie-Banner nötig, da keine Cookies und kein Tracking.
-- Community-Seite ohne das Profil von Mareike Spitzenberg.
+- Keine eigene Community-Seite mehr; die alte Adresse `/unsere-community` leitet auf „Der Verein“ weiter.
 - Datenschutzerklärung: Platzhalter, der finale Text folgt (`src/pages/datenschutz.astro`).

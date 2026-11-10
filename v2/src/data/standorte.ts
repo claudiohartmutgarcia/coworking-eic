@@ -138,7 +138,7 @@ export const standorte: Standort[] = [
       "Loungeterrasse und Schaukel zum Entspannen",
       "Ein Laufband, damit nicht nur dein Gehirn trainiert wird",
       "Lokales und überregionales Netzwerk",
-      "Unterstützung im Gründungsprozess über ThEx, UP THÜRINGEN, IHK und lokale Akteure",
+      "Unterstützung im Gründungsprozess über ThEx, IHK und lokale Akteure",
     ],
   },
   {
@@ -191,7 +191,7 @@ export const standorte: Standort[] = [
       "Der Tech-Space in Leinefelde und Umgebung",
       "Nähe zur Natur",
       "Lokales und überregionales Netzwerk",
-      "Unterstützung im Gründungsprozess über ThEx, UP THÜRINGEN, IHK und lokale Akteure",
+      "Unterstützung im Gründungsprozess über ThEx, IHK und lokale Akteure",
     ],
   },
 ];

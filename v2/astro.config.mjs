@@ -8,6 +8,7 @@ const mitBasis = (pfad) => base.replace(/\/$/, "") + pfad;
 
 // Alte Adressen der WordPress-Seite leiten auf die neuen weiter.
 const alt = {
+  "/unsere-community": "/der-verein",
   "/veranstaltungen-coworking-eichsfeld": "/veranstaltungen",
   "/events": "/veranstaltungen",
   "/events/after-work": "/veranstaltungen/after-work",

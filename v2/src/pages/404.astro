@@ -1,15 +1,239 @@
 ---
 import Seite from "../layouts/Seite.astro";
+import { verein, mailto } from "../data/site";
 import { url } from "../lib/url";
+
+const ziele = [
+  { titel: "Startseite", text: "Alles auf einen Blick", pfad: "/" },
+  { titel: "Heiligenstadt", text: "Industrieloft in der Windischen Gasse", pfad: "/heiligenstadt" },
+  { titel: "Leinefelde", text: "Unser TechHub am Mertens Teich", pfad: "/leinefelde" },
+  { titel: "Preise", text: "Vom Tagesticket bis zum festen Platz", pfad: "/preise" },
+  { titel: "Veranstaltungen", text: "After Work, Sprechtage und mehr", pfad: "/veranstaltungen" },
+  { titel: "Kontakt", text: "Schreib uns oder komm vorbei", pfad: "/kontakt" },
+];
+
+// Ring aus Punkten wie im Logo
+const punkte = Array.from({ length: 3 }, (_, ring) => {
+  const r = 150 + ring * 13;
+  const anzahl = 64 + ring * 6;
+  return Array.from({ length: anzahl }, (_, i) => {
+    const w = (i / anzahl) * Math.PI * 2 + ring * 0.05;
+    return { x: 180 + r * Math.cos(w), y: 180 + r * Math.sin(w), r: 3.4 - ring * 0.9 };
+  });
+}).flat();
 ---
 
-<Seite titel="Seite nicht gefunden">
-  <section class="abschnitt">
+<Seite titel="Seite nicht gefunden" beschreibung="Diese Seite gibt es bei Coworking Eichsfeld nicht (mehr).">
+  <section class="fehler">
+    <div class="container raster-fehler">
+      <div class="text">
+        <span class="kicker">Fehler 404</span>
+        <h1>Da ist die Rakete wohl falsch abgebogen.</h1>
+        <p class="lead">
+          Diese Seite gibt es nicht (mehr). Vielleicht hat sie mit der neuen Website eine andere Adresse bekommen – oder in der Adresse hat sich ein Tippfehler eingeschlichen.
+        </p>
+        <div class="knoepfe">
+          <a class="knopf knopf--akzent" href={url("/")}>Zur Startseite</a>
+          <a class="knopf knopf--hell" href={mailto("Seite nicht gefunden auf coworking-eic.de")}>Fehler melden</a>
+        </div>
+      </div>
+
+      <div class="grafik" aria-hidden="true">
+        <svg viewBox="0 0 360 360" role="presentation">
+          <g class="punkte">
+            {punkte.map((p) => <circle cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r={p.r.toFixed(1)} />)}
+          </g>
+          <circle cx="180" cy="180" r="128" class="ring" />
+          <circle cx="180" cy="180" r="118" class="scheibe" />
+          <text x="180" y="208" text-anchor="middle" class="zahl">404</text>
+          <path class="spur" d="M70 262 C 120 250, 150 300, 210 268 S 280 170, 250 120" />
+          <g class="rakete">
+            <g transform="translate(262 96) rotate(32)">
+              <path class="koerper" d="M0 -38 C 16 -24 18 0 12 22 L -12 22 C -18 0 -16 -24 0 -38 Z" />
+              <circle class="fenster" cx="0" cy="-8" r="7" />
+              <path class="fluegel" d="M-12 8 L -24 26 L -11 22 Z M12 8 L 24 26 L 11 22 Z" />
+              <path class="flamme" d="M-7 24 Q 0 46 7 24 Z" />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--weiss">
     <div class="container">
-      <span class="kicker">Fehler 404</span>
-      <h1>Diese Seite gibt es nicht (mehr).</h1>
-      <p class="lead">Vielleicht hat sie eine neue Adresse bekommen. Probier es über die Startseite.</p>
-      <a class="knopf" href={url("/")}>Zur Startseite</a>
+      <div class="kopf">
+        <span class="kicker">Neuer Kurs</span>
+        <h2>Vielleicht suchst du das hier?</h2>
+      </div>
+      <ul class="ziele">
+        {ziele.map((z) => (
+          <li>
+            <a href={url(z.pfad)}>
+              <strong>{z.titel}</strong>
+              <span>{z.text}</span>
+              <span class="pfeil" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="hilfe">
+        Nichts dabei? Schreib uns an <a href={mailto("Frage zur Website")}>{verein.email}</a> – wir helfen gern weiter.
+      </p>
     </div>
   </section>
 </Seite>
+
+<style>
+  .fehler {
+    background: var(--gruen);
+    background-image:
+      radial-gradient(circle at 85% 20%, rgb(240 168 48 / 0.18), transparent 40%),
+      radial-gradient(circle at 10% 90%, rgb(255 255 255 / 0.06), transparent 45%);
+    color: rgb(255 255 255 / 0.85);
+    padding-block: clamp(48px, 8vw, 96px);
+    overflow: hidden;
+  }
+  .raster-fehler {
+    display: grid;
+    gap: clamp(24px, 5vw, 56px);
+    align-items: center;
+  }
+  @media (min-width: 880px) {
+    .raster-fehler {
+      grid-template-columns: 1.15fr 1fr;
+    }
+  }
+  .kicker {
+    color: var(--akzent);
+  }
+  h1 {
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+  }
+  .lead {
+    color: rgb(255 255 255 / 0.8);
+    margin-bottom: 28px;
+  }
+
+  .grafik {
+    max-width: 420px;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .grafik svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .punkte circle {
+    fill: rgb(255 255 255 / 0.55);
+  }
+  .ring {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 3;
+  }
+  .scheibe {
+    fill: var(--gruen-dunkel);
+    stroke: rgb(255 255 255 / 0.85);
+    stroke-width: 1.5;
+  }
+  .zahl {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 84px;
+    fill: #fff;
+    letter-spacing: -2px;
+  }
+  .spur {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.7);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 2 9;
+  }
+  .koerper {
+    fill: #fff;
+  }
+  .fenster {
+    fill: var(--gruen);
+    stroke: var(--akzent);
+    stroke-width: 2.5;
+  }
+  .fluegel {
+    fill: #dfe9e7;
+  }
+  .flamme {
+    fill: var(--akzent);
+  }
+  .rakete {
+    animation: schweben 4s ease-in-out infinite;
+    transform-origin: 262px 96px;
+  }
+  .flamme {
+    animation: flackern 0.25s ease-in-out infinite alternate;
+    transform-box: fill-box;
+    transform-origin: top center;
+  }
+  @keyframes schweben {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(6px, -10px) rotate(4deg); }
+  }
+  @keyframes flackern {
+    from { transform: scaleY(0.8); }
+    to { transform: scaleY(1.15); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rakete,
+    .flamme {
+      animation: none;
+    }
+  }
+
+  .ziele {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+  .ziele a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 52px 20px 22px;
+    border: 1px solid var(--linie);
+    border-radius: var(--radius-klein);
+    background: var(--hintergrund);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .ziele a:hover {
+    border-color: var(--gruen);
+    background: var(--gruen-hell);
+    transform: translateY(-2px);
+  }
+  .ziele strong {
+    color: var(--gruen-dunkel);
+    font-weight: 600;
+  }
+  .ziele span {
+    font-size: 0.9rem;
+    color: var(--text-leise);
+  }
+  .ziele .pfeil {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    translate: 0 -50%;
+    font-size: 1.2rem;
+    color: var(--gruen);
+  }
+  .hilfe {
+    margin: 32px 0 0;
+    color: var(--text-leise);
+  }
+</style>
