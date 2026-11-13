@@ -1,13 +1,13 @@
-# Veröffentlicht den Ordner site/ als Vorschau auf GitHub Pages.
-# Läuft bei jedem Push auf main. Vor dem Hochladen werden die Seiten für Suchmaschinen gesperrt
-# (tools/suchmaschinen-sperren.mjs), weil coworking-eic.de noch auf WordPress läuft.
-name: Vorschau veröffentlichen
+# Veröffentlicht Version 2 (v2/, Astro) auf GitHub Pages unter https://www.coworking-eic.de.
+# Läuft bei jedem Push auf main. Die eigene Domain ist im Repo unter Settings → Pages eingetragen;
+# coworking-eic.de ohne www leitet GitHub automatisch auf www.coworking-eic.de weiter.
+name: Website veröffentlichen
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Täglich neu bauen, damit vergangene Termine in Version 2 automatisch verschwinden.
+  # Täglich neu bauen, damit vergangene Termine automatisch verschwinden.
   schedule:
     - cron: "0 3 * * *"
 
@@ -33,29 +33,16 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: v2/package-lock.json
-      - id: pages
-        uses: actions/configure-pages@v5
-      - name: Für Suchmaschinen sperren
-        run: node tools/suchmaschinen-sperren.mjs site
-      # Projektseite liegt unter https://<konto>.github.io/<repo>/ - Pfade darauf umschreiben.
-      # Bei einem Repo "<konto>.github.io" ist base_path leer und es passiert nichts.
-      - name: Pfade auf Unterordner umschreiben
-        run: node tools/basis-pfad.mjs site "${{ steps.pages.outputs.base_path }}"
-      # Version 2 (Astro) liegt in der Vorschau unter .../v2/
-      - name: Version 2 bauen
+      - uses: actions/configure-pages@v5
+      # Ohne SITE/BASE/NOINDEX gelten die Standardwerte aus astro.config.mjs:
+      # https://www.coworking-eic.de, Basis "/", für Suchmaschinen sichtbar.
+      - name: Website bauen
         working-directory: v2
-        env:
-          SITE: ${{ steps.pages.outputs.origin }}
-          BASE: ${{ steps.pages.outputs.base_path }}/v2
-          NOINDEX: "1"
         run: |
           npm ci
           npm run build
-          cp -r dist ../site/v2
-          # GitHub Pages nutzt nur die 404.html im Wurzelordner – dort die neue Fehlerseite ablegen.
-          cp dist/404.html ../site/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: v2/dist
       - id: deployment
         uses: actions/deploy-pages@v4
