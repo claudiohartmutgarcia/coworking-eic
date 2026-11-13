@@ -9,7 +9,7 @@ Statische Kopie der bisherigen WordPress-Seite von Coworking Eichsfeld e.V. Es g
 | `termine/beschreibungen/` | Beschreibungstext je Veranstaltung (HTML) |
 | `termine/vorlage-detail.html` | Vorlage für die Detailseiten der Veranstaltungen |
 | `tools/` | Kleine Node-Skripte (keine Abhängigkeiten, nur Node.js ab Version 20) |
-| `v2/` | **Version 2:** neu gebaute Website mit Astro, siehe [v2/README.md](v2/README.md). Vorschau unter https://claudiohartmutgarcia.github.io/coworking-eic/v2/ |
+| `v2/` | **Version 2:** neu gebaute Website mit Astro, siehe [v2/README.md](v2/README.md). **Live unter https://www.coworking-eic.de** |
 | `remake/` | Arbeitsdaten vom Kopieren der alten Seite. Gehört nicht zur Website und kann gelöscht werden. |
 
 ## Vorschau
@@ -20,9 +20,9 @@ node tools/vorschau.mjs
 
 Danach http://localhost:8080 im Browser öffnen.
 
-## Vorschau auf GitHub Pages
+## Veröffentlichung
 
-Jeder Push auf `main` veröffentlicht `site/` über den Workflow `.github/workflows/pages.yml` auf GitHub Pages. Dabei setzt `tools/suchmaschinen-sperren.mjs` in jede veröffentlichte Seite `noindex`, aber nur in der Kopie, die hochgeladen wird. So erscheint die Vorschau nicht neben der alten WordPress-Seite bei Google. Weil die Vorschau unter https://claudiohartmutgarcia.github.io/coworking-eic/ liegt, also in einem Unterordner, schreibt `tools/basis-pfad.mjs` dort außerdem alle Pfade um (`/kontakt` → `/coworking-eic/kontakt`). Die Dateien in `site/` bleiben unverändert. Für den echten Umzug auf coworking-eic.de lädt man `site/` direkt hoch, ohne dieses Skript.
+Seit November 2026 ist **Version 2** (`v2/`) die Website: Jeder Push auf `main` baut sie über `.github/workflows/pages.yml` und veröffentlicht sie auf GitHub Pages (Repo `coworking-eic/website`) unter https://www.coworking-eic.de. `site/` wird nicht mehr veröffentlicht und dient nur noch als Archiv der alten Seite.
 
 ## Termine pflegen
 

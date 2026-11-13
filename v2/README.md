@@ -35,9 +35,9 @@ Neue Veranstaltung: eine Datei kopieren, Text und Termine anpassen, Plakat nach 
 
 Vergangene Termine fallen beim nächsten Bauen weg. Der GitHub-Workflow baut deshalb jede Nacht neu.
 
-## Vorschau auf GitHub Pages
+## Veröffentlichung
 
-Der Workflow `.github/workflows/pages.yml` baut Version 2 und legt sie neben die alte Kopie: https://claudiohartmutgarcia.github.io/coworking-eic/v2/ – mit `noindex`, damit sie nicht bei Google erscheint. Für den echten Umzug auf coworking-eic.de einfach `npm run build` ohne Umgebungsvariablen ausführen und `dist/` hochladen.
+Der Workflow `.github/workflows/pages.yml` baut diese Version bei jedem Push auf `main` und jede Nacht neu und veröffentlicht sie auf GitHub Pages (Repo `coworking-eic/website`) unter https://www.coworking-eic.de. coworking-eic.de ohne www leitet dorthin weiter. Die Domain steht in `public/CNAME` und im Repo unter Settings → Pages; die DNS-Einträge liegen bei IONOS.
 
 ## Was gegenüber der alten Seite anders ist
 
